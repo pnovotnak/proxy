@@ -105,10 +105,10 @@ cc_library(
 # 1) find the ISTIO_API SHA you want in git
 # 2) wget https://github.com/istio/api/archive/ISTIO_API_SHA.tar.gz
 # 3) sha256sum ISTIO_API_SHA.tar.gz
-# see https://github.com/istio/api/commits/release-1.3
-
-ISTIO_API = "483f2547d88281bbbdbb5794c1d3fd0c4a62b597"
-ISTIO_API_SHA256 = "67d7faccc54223454637060a64873493506a6257a7a5664c0b4073d8945f4b14"
+# see https://github.com/pnovotnak/api/commits/release-1.3-thrift
+#
+ISTIO_API = "c29ab8c3ad0f93a8e1f7e2520a52a18e402d74e0"
+ISTIO_API_SHA256 = "90a4e59276536c521dba5dedf624426769208bb6ea07de587cdf2d1c8e4f309b"
 GOGOPROTO_RELEASE = "1.2.1"
 GOGOPROTO_SHA256 = "99e423905ba8921e86817607a5294ffeedb66fdd4a85efce5eb2848f715fdb3a"
 
@@ -302,7 +302,7 @@ py_proto_library(
         name = "mixerapi_git",
         build_file_content = BUILD,
         strip_prefix = "api-" + ISTIO_API,
-        url = "https://github.com/istio/api/archive/" + ISTIO_API + ".tar.gz",
+        url = "https://github.com/pnovotnak/api/archive/" + ISTIO_API + ".tar.gz",
         sha256 = ISTIO_API_SHA256,
     )
     if bind:
