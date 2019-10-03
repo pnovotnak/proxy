@@ -1,5 +1,9 @@
 /bazel-*
+.cache/*
 .idea/*
 docker/envoy
 *.iml
 /artifacts
+
+docker/
+hack.sh

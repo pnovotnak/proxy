@@ -1,20 +1,21 @@
-clone:
-  git: 
-    image: plugins/git
-pipeline:
-  build:
-    image: costinm/proxy-builder:0.4.4
-    commands:
-      - id
-      - env
-      - sudo chown -R circleci /drone/src
-      - HOME=/drone/src make build_envoy
-  test:
-    image: costinm/proxy-builder:0.4.4
-    commands:
-      - id
-      - env
-      - sudo chown -R circleci /drone/src
-      - HOME=/drone/src make test_envoy
+kind: pipeline
+type: docker
+name: default
 
+steps:
+  - name: build
+    image: istio/ci:go1.11-bazelisk-clang8-cmake3.8.0
+    commands:
+      - make build
+      - make test
+    environment:
+      BAZEL_BUILD_ARGS: "--local_ram_resources=12288 --local_cpu_resources=8 --verbose_failures --test_env=ENVOY_IP_TEST_VERSIONS=v4only --test_output=all"
 
+  - name: linux_release
+    image: istio/ci:go1.11-bazelisk-clang8-cmake3.8.0
+    environment:
+      BAZEL_BUILD_ARGS: "--local_ram_resources=12288 --local_cpu_resources=8 --verbose_failures --test_env=ENVOY_IP_TEST_VERSIONS=v4only --test_output=all"
+    commands:
+      - make deb
+      - make artifacts ARTIFACTS_DIR="/home/circleci/project/artifacts"
+      - make test_release
