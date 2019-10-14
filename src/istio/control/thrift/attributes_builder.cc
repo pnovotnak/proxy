@@ -34,7 +34,7 @@ void AttributesBuilder::ExtractCheckAttributes(CheckData *check_data) {
 
   std::string source_ip;
   int source_port;
-  // TODO(kuat): there is no way to propagate source IP in THRIFT, so we auto-set
+  // TODO(peter.novotnak@reddit.com): Is there a way to propagate source IP in Thrift?
   // it
   if (check_data->GetSourceIpPort(&source_ip, &source_port)) {
     builder.AddBytes(utils::AttributeName::kSourceIp, source_ip);
@@ -42,7 +42,7 @@ void AttributesBuilder::ExtractCheckAttributes(CheckData *check_data) {
     builder.AddBytes(utils::AttributeName::kOriginIp, source_ip);
   }
 
-  // TODO(diemtvu): add THRIFT authn filter similar to http case, and use authn
+  // TODO(peter.novotnak@reddit.com): add Thrift authn filter similar to http case, and use authn
   // result output here instead.
   std::string source_user;
   if (check_data->GetPrincipal(true, &source_user)) {
